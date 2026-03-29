@@ -7,9 +7,6 @@ Efficient fibre-to-chip coupling remains a primary bottleneck in silicon photoni
 
 In this repository, we propose a single-etch 3D grating coupler design that systematically resolves these problems. By combining a focusing geometry with an apodized grating profile, we reshape the coupling strength and redirect the diffracted wavefront to suppress multi-path reflections. This work provides a straightforward, tape-out-ready methodology for realizing high-efficiency, spectrally stable optical interfaces without complex reflectors.
 
-![Figure 1](link_to_figure1_here)
-> **Figure 1.** Schematic cross-section diagram of a shallow-etched silicon grating coupler.
-
 ## ⚠️ Important Usage Note
 **This repository contains only `.lsf` scripts and does not include the pre-calculated simulation results.** 
 
@@ -37,7 +34,7 @@ To establish a robust design, the longitudinal coupling mechanics were first iso
 * **Performance:** The optimized 2D straight grating exhibits a peak transmission of **0.692** at 1550 nm (coupling loss of approx. -1.60 dB). The extracted 3 dB bandwidth is 54.19 nm.
 * **Characteristics:** The spectrum is smooth and follows a near-ideal sinc² envelope. The incident Gaussian beam is diffracted efficiently into the grating region and then transferred into the guided mode with relatively weak parasitic standing-wave features.
 
-![Figure 3](link_to_figure3_here)
+![Figure 3](<img width="1815" height="745" alt="2D" src="https://github.com/user-attachments/assets/172694e8-01e4-441c-8b81-906ea84e8a9d" />)
 > **Figure 3.** 2D optimized straight grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing efficient diffraction and smooth coupling.
 
 ### 2. Performance Degradation in the 3D Straight-Grating Coupler
