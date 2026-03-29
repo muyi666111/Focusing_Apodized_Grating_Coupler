@@ -5,7 +5,7 @@
 ## Abstract
 Efficient fibre-to-chip coupling remains a primary bottleneck in silicon photonics. Standard two-dimensional (2D) grating optimizations often fail when translated to three-dimensional (3D) layouts, suffering from severe spectral degradation due to non-ideal diffraction and parasitic Fabry-Perot interference. 
 
-In this repository, we propose a single-etch 3D grating coupler design that systematically resolves these problems. By combining a focusing geometry with an apodized grating profile, we reshape the coupling strength and redirect the diffracted wavefront to suppress multi-path reflections. This work provides a straightforward, tape-out-ready methodology for realizing high-efficiency, spectrally stable optical interfaces without complex reflectors.
+In this work, the author proposes a single-etch 3D grating coupler design that systematically resolves these problems. By combining a focusing geometry with an apodized grating profile, we reshape the coupling strength and redirect the diffracted wavefront to suppress multi-path reflections. This work provides a straightforward, tape-out-ready methodology for realizing high-efficiency, spectrally stable optical interfaces without complex reflectors.
 
 ## ⚠️ Important Usage Note
 **This repository contains only `.lsf` scripts and does not include the pre-calculated simulation results.** 
@@ -34,7 +34,7 @@ To establish a robust design, the longitudinal coupling mechanics were first iso
 * **Performance:** The optimized 2D straight grating exhibits a peak transmission of **0.692** at 1550 nm (coupling loss of approx. -1.60 dB). The extracted 3 dB bandwidth is 54.19 nm.
 * **Characteristics:** The spectrum is smooth and follows a near-ideal sinc² envelope. The incident Gaussian beam is diffracted efficiently into the grating region and then transferred into the guided mode with relatively weak parasitic standing-wave features.
 
-![Figure 1]()<img width="1815" height="745" alt="2D" src="https://github.com/user-attachments/assets/c8a79364-b0e8-45f9-8353-51cc0aff58dc" />
+<img width="1815" height="745" alt="2D" src="https://github.com/user-attachments/assets/c8a79364-b0e8-45f9-8353-51cc0aff58dc" />
 > **Figure 1.** 2D optimized straight grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing efficient diffraction and smooth coupling.
 
 ### 2. Performance Degradation in the 3D Straight-Grating Coupler
@@ -42,7 +42,6 @@ When the same straight-grating design is evaluated in 3D, its performance degrad
 * **Performance:** The peak transmission drops to **0.405** (-3.92 dB), and the maximum shifts from 1550 nm to approximately 1560 nm. 
 * **Characteristics:** The spectral profile is no longer smooth: pronounced oscillations appear across the passband. The 3D straight grating exhibits chaotic interference fringes in the surrounding area, consistent with Fabry-Perot oscillations caused by reflection and multi-path re-interference.
 
-![Figure 2]()
 <img width="1745" height="757" alt="3D 1" src="https://github.com/user-attachments/assets/c802dce9-2868-45ef-89ef-4f3f62510031" />
 > **Figure 2.** 3D straight-grating coupler. **a)** Simulated transmission spectrum showing a reduced peak transmission and a red-shifted maximum. **b)** Electric-field distribution showing strong superposed interference fringes.
 
@@ -52,7 +51,6 @@ To address this limitation, the straight grating was redesigned as a 3D focusing
 * **Performance:** The optimized 3D focusing-apodized grating substantially restores the desired device behavior. The peak transmission increases to **0.555 (–2.56 dB)** precisely at 1550 nm, while the 3 dB bandwidth broadens to **61.05 nm**.
 * **Characteristics:** The oscillatory modulation is strongly suppressed. The interference pattern is much cleaner and the radiated field is more spatially organized.
 
-![Figure 3]()
 <img width="1753" height="772" alt="3D 2" src="https://github.com/user-attachments/assets/abea5816-604b-4c0d-8fc8-05efee73b9ba" />
 > **Figure 3.** Simulation result of optimized 3D focusing-apodized grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing clean focusing into the taper entrance and reduced parasitic interference.
 
@@ -60,7 +58,7 @@ To address this limitation, the straight grating was redesigned as a 3D focusing
 
 We systematically bridged the gap between idealized 2D designs and realistic 3D physical behaviors in silicon grating couplers. The performance limitations commonly observed in single-etch SOI grating couplers largely come from uncontrolled 3D parasitic interference and lateral mode mismatch. 
 
-These effects are successfully mitigated through the combined use of focusing and apodization:
+These effects are successfully reduced through the combined use of focusing and apodization:
 1. **Focusing geometry:** Reshapes the diffracted wavefront, suppressing divergence and reducing leakage to improve mode overlap with the fiber.
 2. **Apodization (chirped fill factor):** Gradually modifies the effective index and scattering strength along the propagation direction, effectively breaking the parasitic effects and suppressing coherent back-reflections.
 
