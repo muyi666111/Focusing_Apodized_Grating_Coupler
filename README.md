@@ -35,7 +35,9 @@ To establish a robust design, the longitudinal coupling mechanics were first iso
 * **Characteristics:** The spectrum is smooth and follows a near-ideal sinc² envelope. The incident Gaussian beam is diffracted efficiently into the grating region and then transferred into the guided mode with relatively weak parasitic standing-wave features.
 
 ![Figure 1]()
-<img width="1815" height="745" alt="2D" src="https://github.com/user-attachments/assets/c8a79364-b0e8-45f9-8353-51cc0aff58dc" />
+<p align="center">
+  <img width="1210" height="497" alt="2D" src="https://github.com/user-attachments/assets/c8a79364-b0e8-45f9-8353-51cc0aff58dc" />
+</p>
 > **Figure 1.** 2D optimized straight grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing efficient diffraction and smooth coupling.
 
 ### 2. Performance Degradation in the 3D Straight-Grating Coupler
@@ -44,7 +46,9 @@ When the same straight-grating design is evaluated in 3D, its performance degrad
 * **Characteristics:** The spectral profile is no longer smooth: pronounced oscillations appear across the passband. The 3D straight grating exhibits chaotic interference fringes in the surrounding area, consistent with Fabry-Perot oscillations caused by reflection and multi-path re-interference.
 
 ![Figure 2]()
-<img width="1745" height="757" alt="3D 1" src="https://github.com/user-attachments/assets/c802dce9-2868-45ef-89ef-4f3f62510031" />
+<p align="center">
+  <img width="1163" height="505" alt="3D 1" src="https://github.com/user-attachments/assets/c802dce9-2868-45ef-89ef-4f3f62510031" />
+</p>
 > **Figure 2.** 3D straight-grating coupler. **a)** Simulated transmission spectrum showing a reduced peak transmission and a red-shifted maximum. **b)** Electric-field distribution showing strong superposed interference fringes.
 
 ### 3. Recovery by the 3D Focusing-Apodized Grating Coupler
@@ -54,7 +58,9 @@ To address this limitation, the straight grating was redesigned as a 3D focusing
 * **Characteristics:** The oscillatory modulation is strongly suppressed. The interference pattern is much cleaner and the radiated field is more spatially organized.
 
 ![Figure 3]()
-<img width="1753" height="772" alt="3D 2" src="https://github.com/user-attachments/assets/abea5816-604b-4c0d-8fc8-05efee73b9ba" />
+<p align="center">
+  <img width="1169" height="515" alt="3D 2" src="https://github.com/user-attachments/assets/abea5816-604b-4c0d-8fc8-05efee73b9ba" />
+</p>
 > **Figure 3.** Simulation result of optimized 3D focusing-apodized grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing clean focusing into the taper entrance and reduced parasitic interference.
 
 ## 💡 Discussion and Conclusion
