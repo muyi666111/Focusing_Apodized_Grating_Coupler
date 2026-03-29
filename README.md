@@ -34,28 +34,26 @@ To establish a robust design, the longitudinal coupling mechanics were first iso
 * **Performance:** The optimized 2D straight grating exhibits a peak transmission of **0.692** at 1550 nm (coupling loss of approx. -1.60 dB). The extracted 3 dB bandwidth is 54.19 nm.
 * **Characteristics:** The spectrum is smooth and follows a near-ideal sinc² envelope. The incident Gaussian beam is diffracted efficiently into the grating region and then transferred into the guided mode with relatively weak parasitic standing-wave features.
 
-![Figure 3](<img width="1815" height="745" alt="2D" src="https://github.com/user-attachments/assets/172694e8-01e4-441c-8b81-906ea84e8a9d" />)
-> **Figure 3.** 2D optimized straight grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing efficient diffraction and smooth coupling.
+![Figure 1]<img width="1815" height="745" alt="2D" src="https://github.com/user-attachments/assets/c8a79364-b0e8-45f9-8353-51cc0aff58dc" />
+()
+> **Figure 1.** 2D optimized straight grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing efficient diffraction and smooth coupling.
 
 ### 2. Performance Degradation in the 3D Straight-Grating Coupler
 When the same straight-grating design is evaluated in 3D, its performance degrades significantly due to neglected multi-path reflections at the device boundaries.
 * **Performance:** The peak transmission drops to **0.405** (-3.92 dB), and the maximum shifts from 1550 nm to approximately 1560 nm. 
 * **Characteristics:** The spectral profile is no longer smooth: pronounced oscillations appear across the passband. The 3D straight grating exhibits chaotic interference fringes in the surrounding area, consistent with Fabry-Perot oscillations caused by reflection and multi-path re-interference.
 
-![Figure 4](link_to_figure4_here)
-> **Figure 4.** 3D straight-grating coupler. **a)** Simulated transmission spectrum showing a reduced peak transmission and a red-shifted maximum. **b)** Electric-field distribution showing strong superposed interference fringes.
+![Figure 2](link_to_figure4_here)
+> **Figure 2.** 3D straight-grating coupler. **a)** Simulated transmission spectrum showing a reduced peak transmission and a red-shifted maximum. **b)** Electric-field distribution showing strong superposed interference fringes.
 
 ### 3. Recovery by the 3D Focusing-Apodized Grating Coupler
 To address this limitation, the straight grating was redesigned as a 3D focusing-apodized grating coupler. The grating trenches were mapped onto confocal ellipses to direct the diffracted field into a submicron waveguide.
 
-![Figure 2](link_to_figure2_here)
-> **Figure 2.** Schematic diagram of a focusing GC with curved grating lines.
-
 * **Performance:** The optimized 3D focusing-apodized grating substantially restores the desired device behavior. The peak transmission increases to **0.555 (–2.56 dB)** precisely at 1550 nm, while the 3 dB bandwidth broadens to **61.05 nm**.
 * **Characteristics:** The oscillatory modulation is strongly suppressed. The interference pattern is much cleaner and the radiated field is more spatially organized.
 
-![Figure 5](link_to_figure5_here)
-> **Figure 5.** Simulation result of optimized 3D focusing-apodized grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing clean focusing into the taper entrance and reduced parasitic interference.
+![Figure 3](link_to_figure5_here)
+> **Figure 3.** Simulation result of optimized 3D focusing-apodized grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing clean focusing into the taper entrance and reduced parasitic interference.
 
 ## 💡 Discussion and Conclusion
 
