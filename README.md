@@ -34,7 +34,7 @@ To establish a robust design, the longitudinal coupling mechanics were first iso
 * **Performance:** The optimized 2D straight grating exhibits a peak transmission of **0.692** at 1550 nm (coupling loss of approx. -1.60 dB). The extracted 3 dB bandwidth is 54.19 nm.
 * **Characteristics:** The spectrum is smooth and follows a near-ideal sinc² envelope. The incident Gaussian beam is diffracted efficiently into the grating region and then transferred into the guided mode with relatively weak parasitic standing-wave features.
 
-![Figure 1]<img width="1815" height="745" alt="2D" src="https://github.com/user-attachments/assets/c8a79364-b0e8-45f9-8353-51cc0aff58dc" />
+![Figure 1]()<img width="1815" height="745" alt="2D" src="https://github.com/user-attachments/assets/c8a79364-b0e8-45f9-8353-51cc0aff58dc" />
 > **Figure 1.** 2D optimized straight grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing efficient diffraction and smooth coupling.
 
 ### 2. Performance Degradation in the 3D Straight-Grating Coupler
