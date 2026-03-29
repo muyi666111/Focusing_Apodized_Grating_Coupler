@@ -38,7 +38,7 @@ To establish a robust design, the longitudinal coupling mechanics were first iso
 <p align="center">
   <img width="807" height="331" alt="2D" src="https://github.com/user-attachments/assets/c8a79364-b0e8-45f9-8353-51cc0aff58dc" />
 </p>
-> **Figure 1.** 2D optimized straight grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing efficient diffraction and smooth coupling.
+> Figure 1. 2D optimized straight grating coupler. a) Simulated transmission spectrum. b) Electric-field distribution showing efficient diffraction and smooth coupling.
 
 ### 2. Performance Degradation in the 3D Straight-Grating Coupler
 When the same straight-grating design is evaluated in 3D, its performance degrades significantly due to neglected multi-path reflections at the device boundaries.
@@ -49,7 +49,7 @@ When the same straight-grating design is evaluated in 3D, its performance degrad
 <p align="center">
   <img width="775" height="337" alt="3D 1" src="https://github.com/user-attachments/assets/c802dce9-2868-45ef-89ef-4f3f62510031" />
 </p>
-> **Figure 2.** 3D straight-grating coupler. **a)** Simulated transmission spectrum showing a reduced peak transmission and a red-shifted maximum. **b)** Electric-field distribution showing strong superposed interference fringes.
+> Figure 2. 3D straight-grating coupler. a) Simulated transmission spectrum showing a reduced peak transmission and a red-shifted maximum. b) Electric-field distribution showing strong superposed interference fringes.
 
 ### 3. Recovery by the 3D Focusing-Apodized Grating Coupler
 To address this limitation, the straight grating was redesigned as a 3D focusing-apodized grating coupler. The grating trenches were mapped onto confocal ellipses to direct the diffracted field into a submicron waveguide.
@@ -61,7 +61,7 @@ To address this limitation, the straight grating was redesigned as a 3D focusing
 <p align="center">
   <img width="779" height="343" alt="3D 2" src="https://github.com/user-attachments/assets/abea5816-604b-4c0d-8fc8-05efee73b9ba" />
 </p>
-> **Figure 3.** Simulation result of optimized 3D focusing-apodized grating coupler. **a)** Simulated transmission spectrum. **b)** Electric-field distribution showing clean focusing into the taper entrance and reduced parasitic interference.
+> Figure 3. Simulation result of optimized 3D focusing-apodized grating coupler. a) Simulated transmission spectrum. b) Electric-field distribution showing clean focusing into the taper entrance and reduced parasitic interference.
 
 ## 💡 Discussion and Conclusion
 
