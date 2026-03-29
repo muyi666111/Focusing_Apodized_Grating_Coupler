@@ -1,0 +1,116 @@
+# Script file: 2D Straight Coupler.lsf
+#
+# Purpose:
+# This Lumerical script (LSF) creates a 2D FDTD simulation of a uniform 
+# grating coupler on SOI platform for fast parameter sweeping and optimization. 
+# It includes silicon waveguide, BOX, substrate, uniform grating teeth, and 
+# top cladding. A tilted Gaussian source represents the fiber input from the top. 
+# Power and mode expansion monitors extract the coupled power into the fundamental 
+# TE mode on the right side of the waveguide. A field profile monitor captures 
+# the full 2D field distribution.
+#
+# Record of revisions:
+# Date          Programmer         Description of change
+# ====         ==========          =====================
+# 03/20/26    Yuanzhang Yang        Original code
+#
+# Define variables:
+# period       -- Uniform grating period (m)
+
+switchtolayout;
+selectall;
+deleteall;
+
+
+# --- 1. 2D FDTD Environment Settings ---
+addfdtd;
+set("dimension", "2D");
+set("x", 2e-6); set("x span", 24e-6);
+set("y", -1e-6); set("y span", 10e-6);
+set("x min bc", "PML"); set("x max bc", "PML");
+set("y min bc", "PML"); set("y max bc", "PML");
+set("simulation time", 3000e-15);
+setglobalmonitor("frequency points", 301);
+
+# --- 2. Silicon Waveguide Layer ---
+addrect;
+set("name", "silicon_layer");
+set("x", 2e-6); set("x span", 24e-6);
+set("y", 0.11e-6); set("y span", 0.22e-6);
+set("material", "Si (Silicon) - Palik");
+
+# --- 3. BOX Layer ---
+addrect;
+set("name", "BOX");
+set("x", 2e-6); set("x span", 24e-6);
+set("y", -1e-6); set("y span", 2e-6);
+set("material", "SiO2 (Glass) - Palik");
+
+# --- 4. Si Substrate (Key for improving efficiency) ---
+addrect;
+set("name", "si_substrate");
+set("x", 2e-6); set("x span", 24e-6);
+set("y", -3.5e-6); set("y span", 3e-6);
+set("material", "Si (Silicon) - Palik");
+
+# --- 5. Grating Section ---
+period = 0.654e-6;
+for (i = 1:23) {
+    addrect;
+    set("name", "etch_" + num2str(i));
+    set("x", -(20*period)/2 + (i-0.5)*period);
+    set("x span", period*0.5);
+    set("y", 0.22e-6 - 0.035e-6);
+    set("y span", 0.07e-6);
+    set("material", "SiO2 (Glass) - Palik");
+    set("override mesh order from material database", 1);
+    set("mesh order", 1);
+}
+
+# --- 6. Top Oxide Cladding ---
+addrect;
+set("name", "top_clad");
+set("x", 2e-6); set("x span", 24e-6);
+set("y", 0.22e-6 + 0.75e-6);
+set("y span", 1.5e-6);
+set("material", "SiO2 (Glass) - Palik");
+set("override mesh order from material database", 1);
+set("mesh order", 3);
+
+# --- 7. Gaussian Source ---
+addgaussian;
+set("name", "fiber_source");
+set("x", 3.672e-6); # Slight right offset to optimize fiber coupling position
+set("y", 0.22e-6 + 1.5e-6 + 1e-6);
+set("injection axis", "y");
+set("direction", "backward");
+set("angle theta", 20);
+set("waist radius w0", 4.5e-6);
+set("polarization angle", 90);
+set("wavelength start", 1.5e-6);
+set("wavelength stop", 1.6e-6);
+
+# --- 8. Monitors ---
+# 1. Wide DFT monitor (retained for providing field distribution to Mode Expansion)
+adddftmonitor;
+set("name", "power_right");
+set("monitor type", "2D X-normal");
+set("x", 13e-6);
+set("y", 0.11e-6); set("y span", 3e-6);
+
+# 2. Critical: Mode Expansion Monitor
+addmodeexpansion;
+set("name", "mode_exp");
+set("monitor type", "2D X-normal");
+set("x", 13e-6);
+set("y", 0.11e-6); set("y span", 3e-6);
+# Instruct the system to extract only the power coupled into the fundamental TE mode
+set("mode selection", "fundamental TE mode"); 
+# Bind the expansion monitor to the DFT monitor
+setexpansion("T_forward", "power_right"); 
+
+adddftmonitor;
+set("name", "field_profile");
+set("monitor type", "2D Z-normal");
+set("x", 2e-6); set("x span", 24e-6);
+set("y", 0e-6); set("y span", 8e-6);

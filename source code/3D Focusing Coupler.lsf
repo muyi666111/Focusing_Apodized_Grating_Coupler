@@ -1,0 +1,228 @@
+# Script file: 3D Focusing Coupler.lsf
+#
+# Purpose:
+# This Lumerical script (LSF) generates a 3D focusing apodized grating coupler 
+# with chirped period and fill-factor (duty cycle) for fiber-to-chip coupling 
+# at 1550 nm. It builds a silicon-on-insulator (SOI) platform with a fan-shaped 
+# taper, a straight single-mode waveguide (500 nm width), and a curved focusing 
+# grating with 16 teeth. The grating uses linear apodization in fill factor and 
+# period to achieve a near-Gaussian output spot. A Gaussian beam source simulates 
+# the optical fiber input with angle and offset. Monitors are placed to capture 
+# power and field profiles at the focal point inside the waveguide.
+#
+# Record of revisions:
+# Date          Programmer                 Description of change
+# ====        ==============              ========================
+# 03/25/26    Yuanzhang Yang                  Original code
+#
+# Define variables:
+# source_x_offset     -- Fiber X offset relative to geometric center (m)
+# r_start             -- Distance from focus to first grating tooth (m)
+# ff_start            -- Fill factor of the first grating tooth
+# ff_end              -- Fill factor of the last grating tooth
+# period_start        -- Period of the first grating tooth (m)
+# period_end          -- Period of the last grating tooth (m)
+# lambda0             -- Central wavelength (1.55 μm)
+# wg_thickness        -- Silicon waveguide thickness (220 nm)
+# etch_depth          -- Grating etch depth (80 nm)
+# num_points          -- Number of points for polygon resolution
+# num_teeth           -- Number of grating teeth
+# focal_x             -- X coordinate of the focal point (m)
+# y_offset            -- Y offset of the focus (m)
+# y_half_width        -- Half-width of the grating aperture (m)
+# avg_period          -- Average grating period (auto-calculated)
+# grating_center_x    -- X position of grating center (auto-calculated)
+# aperture_half_angle -- Half aperture angle of the focusing grating (rad)
+# wg_width            -- Single-mode waveguide width (500 nm)
+# x_grat_back         -- Back edge position of the taper (m)
+# wedge_pts           -- Polygon vertices for the fan-shaped taper + straight WG
+# r_center            -- Running radial position for each grating tooth
+# ff_q                -- Interpolated fill factor for current tooth q
+# period_q            -- Interpolated period for current tooth q
+# slot_width_q        -- Etch slot width for current tooth
+# r_inner, r_outer    -- Inner and outer radii for the current curved tooth
+# poly_points         -- Vertices for the focusing etch polygon
+
+switchtolayout;
+selectall;
+deleteall;
+
+# ====================== Complete Cleanup ======================
+clear;       # Clear all variable cache
+
+
+# =================================================================
+# 【Section 1】Core Sweep Parameters Area
+# =================================================================
+
+# 1. Spatial Alignment Parameters
+source_x_offset = 1.4e-6;   # Fiber X-direction offset relative to geometric center
+r_start         = 18e-6;    # Distance from focus to the first grating tooth
+
+# 2. Fill Factor Apodization (controls output spot shape, aiming for symmetric Gaussian)
+ff_start        = 0.72;     # Fill factor of the first tooth
+ff_end          = 0.41;     # Fill factor of the last tooth
+
+# 3. Period Apodization (controls wavelength; period must increase as ff decreases to lock 1550nm)
+period_start    = 0.635e-6; # Period of the first tooth
+period_end      = 0.675e-6; # Period of the last tooth
+
+
+# =================================================================
+# 【Section 2】Fixed Physical/Geometry Parameters (Do Not Change)
+# =================================================================
+lambda0      = 1.55e-6;
+wg_thickness = 0.22e-6;   # Silicon waveguide total thickness
+etch_depth   = 0.08e-6;   # Optimized grating etch depth 80nm
+num_points   = 60;        # Polygon drawing resolution
+num_teeth    = 16;        # Number of grating teeth
+focal_x      = -0.11e-6;  # Focal point X coordinate
+y_offset     = 0e-6;      # Focal point Y coordinate
+y_half_width = 7.0e-6;    # Grating half-width
+
+# --- Automatic Calculations (No Modification Needed) ---
+avg_period = (period_start + period_end) / 2;
+grating_center_x = focal_x - (r_start + (num_teeth * avg_period) / 2);
+aperture_half_angle = asin(y_half_width / r_start);
+
+
+# =================================================================
+# FDTD Settings (Adaptive Parameter Area)
+# =================================================================
+addfdtd;
+set("dimension", "3D");
+set("x min", grating_center_x - (num_teeth * avg_period) / 2 - 3e-6); 
+set("x max", focal_x + 25e-6);
+set("y min", y_offset - y_half_width - 2e-6); 
+set("y max", y_offset + y_half_width + 2e-6);
+set("z min", -5.3e-6); set("z max", 2.8e-6);
+
+set("x min bc", "PML"); set("x max bc", "PML");
+set("y min bc", "PML"); set("y max bc", "PML");
+set("z min bc", "PML"); set("z max bc", "PML");
+set("simulation time", 3000e-15);
+setglobalmonitor("frequency points", 301);
+
+# =================================================================
+# Structure Layers (Bottom + Fan-shaped Taper + 500nm Single-mode Straight Waveguide)
+# =================================================================
+wg_width = 0.5e-6; # Real single-mode waveguide width 500nm
+x_grat_back = grating_center_x - (num_teeth * avg_period) / 2 - 4e-6;
+
+# Construct polygon vertices for fan-shaped taper + straight waveguide
+wedge_pts = zeros(6, 2);
+wedge_pts(1, 1) = x_grat_back; wedge_pts(1, 2) = y_half_width;  # Taper left upper
+wedge_pts(2, 1) = x_grat_back; wedge_pts(2, 2) = -y_half_width; # Taper left lower
+wedge_pts(3, 1) = focal_x;     wedge_pts(3, 2) = -wg_width/2;   # Focus lower boundary
+wedge_pts(4, 1) = 50e-6;       wedge_pts(4, 2) = -wg_width/2;   # Waveguide end lower boundary
+wedge_pts(5, 1) = 50e-6;       wedge_pts(5, 2) = wg_width/2;    # Waveguide end upper boundary
+wedge_pts(6, 1) = focal_x;     wedge_pts(6, 2) = wg_width/2;    # Focus upper boundary
+
+addpoly;
+set("name", "silicon_taper_and_wg");
+set("x", 0); set("y", 0);
+set("vertices", wedge_pts);
+set("z min", 0); set("z max", wg_thickness);
+set("material", "Si (Silicon) - Palik");
+set("override mesh order from material database", 1);
+set("mesh order", 2); # Set to 2 so it can be etched by grating slots (mesh order 1)
+
+addrect; set("name", "BOX"); set("x min", -50e-6); set("x max", 50e-6);
+set("y min", -20e-6); set("y max", 20e-6); set("z min", -2e-6); set("z max", 0);
+set("material", "SiO2 (Glass) - Palik");
+
+addrect; set("name", "si_substrate"); set("x min", -50e-6); set("x max", 50e-6);
+set("y min", -20e-6); set("y max", 20e-6); set("z min", -5e-6); set("z max", -2e-6);
+set("material", "Si (Silicon) - Palik");
+
+addrect; set("name", "top_clad"); set("x min", -50e-6); set("x max", 50e-6);
+set("y min", -20e-6); set("y max", 20e-6); set("z min", wg_thickness); set("z max", 1.72e-6);
+set("material", "SiO2 (Glass) - Palik");
+set("override mesh order from material database", 1);
+set("mesh order", 3);
+
+addrect; set("name", "focal_marker_center"); set("x", focal_x); set("x span", 0.2e-6);
+set("y", y_offset); set("y span", 1.5e-6); set("z", 0.11e-6); set("z span", 0.01e-6);
+set("material", "Si (Silicon) - Palik"); set("override mesh order from material database", 1); set("mesh order", 1);
+
+addrect; set("name", "focal_marker_horizontal"); set("x", focal_x); set("x span", 1.5e-6);
+set("y", y_offset); set("y span", 0.2e-6); set("z", 0.11e-6); set("z span", 0.01e-6);
+set("material", "Si (Silicon) - Palik"); set("override mesh order from material database", 1); set("mesh order", 1);
+
+# =================================================================
+# Focusing Grating Generation Core Logic (Apodized)
+# =================================================================
+r_center = r_start;
+
+for (q = 1:num_teeth) {
+    # Linear interpolation of fill factor and period for current tooth
+    ff_q = ff_start + (q - 1) * (ff_end - ff_start) / (num_teeth - 1);
+    period_q = period_start + (q - 1) * (period_end - period_start) / (num_teeth - 1);
+    
+    slot_width_q = period_q * (1 - ff_q);
+    r_inner  = r_center - slot_width_q/2;
+    r_outer  = r_center + slot_width_q/2;
+    
+    poly_points = zeros(2*num_points + 2, 2);
+    idx = 1;
+    for (i = 0:num_points) {
+        phi = -aperture_half_angle + 2*aperture_half_angle * i / num_points;
+        x = focal_x - r_outer * cos(phi);
+        y = r_outer * sin(phi) + y_offset;
+        poly_points(idx,1) = x;
+        poly_points(idx,2) = y;
+        idx = idx + 1;
+    }
+    for (i = num_points:-1:0) {
+        phi = -aperture_half_angle + 2*aperture_half_angle * i / num_points;
+        x = focal_x - r_inner * cos(phi);
+        y = r_inner * sin(phi) + y_offset;
+        poly_points(idx,1) = x;
+        poly_points(idx,2) = y;
+        idx = idx + 1;
+    }
+    
+    addpoly;
+    set("name", "focusing_etch_apodized_" + num2str(q));
+    set("x", 0); set("y", 0); set("vertices", poly_points);
+    set("z max", wg_thickness);
+    set("z min", wg_thickness - etch_depth); 
+    set("material", "SiO2 (Glass) - Palik");
+    set("override mesh order from material database", 1);
+    set("mesh order", 1);
+    
+    r_center = r_center + period_q;
+}
+
+# =================================================================
+# Source + Monitors
+# =================================================================
+addgaussian;
+set("name", "fiber_source");
+# Core: Source position = geometric center + X offset compensation
+set("x", grating_center_x + source_x_offset); 
+set("y", y_offset);
+set("z", wg_thickness + 1.5e-6 + 0.5e-6);
+set("injection axis", "z"); set("direction", "backward");
+set("angle theta", -20); set("polarization angle", -90);
+set("waist radius w0", 5.2e-6);
+set("wavelength start", 1.5e-6); set("wavelength stop", 1.6e-6);
+
+adddftmonitor; set("name", "power_focus");
+set("monitor type", "2D X-normal"); 
+set("x", focal_x + 3e-6);  # Placed 3um after the focal point in the straight waveguide
+set("y", y_offset); set("y span", 3e-6); 
+set("z", 0.11e-6); set("z span", 2e-6);
+
+addmodeexpansion; set("name", "mode_expansion_focus");
+set("monitor type", "2D X-normal"); 
+set("x", focal_x + 3.1e-6); # Bound to DFT monitor
+set("y", y_offset); set("y span", 3e-6); 
+set("z", 0.11e-6); set("z span", 2e-6);
+set("mode selection", "fundamental TE mode");
+
+adddftmonitor; set("name", "field_profile");
+set("monitor type", "2D Y-normal"); set("y", y_offset);
+set("x min", grating_center_x - (num_teeth * avg_period) / 2 - 2e-6); 
+set("x max", focal_x + 5e-6);
+set("z", 0.8e-6); set("z span", 3.5e-6);
