@@ -63,6 +63,24 @@ To address this limitation, the straight grating was redesigned as a 3D focusing
 </p>
 > Figure 3. Simulation result of optimized 3D focusing-apodized grating coupler. a) Simulated transmission spectrum. b) Electric-field distribution showing clean focusing into the taper entrance and reduced parasitic interference.
 
+## 📈 Performance Comparison
+
+Table 1 benchmarks the present design against representative high-efficiency grating couplers reported in the literature. A clear trend is that the highest efficiencies are typically achieved through engineered vertical asymmetry or reflection enhancement, which inevitably introduce additional fabrication complexity.
+
+**Table 1.** Comparison with representative high-efficiency grating couplers.
+
+| Scheme | Additional Process / Special Structure | Peak CE (dB) | BW (nm) | Main Characteristics |
+| :--- | :--- | :--- | :--- | :--- |
+| SOI GC with poly-Si overlay | Overlay deposition | Sim. -1.0 <br> Exp. -1.6 | 44 (1 dB) | Higher upward directionality, but requires extra overlay process |
+| SOI GC with Au bottom reflector | Metal reflector / bonding | Sim. -1.1 <br> Exp. -1.6 | 45 (1 dB) | Very high directionality, but fabrication is more complex |
+| SiN GC with DBR reflector | Multilayer DBR | Sim. -2.3 <br> Exp. -2.5 | 53 (1 dB) | Reflector-assisted, multilayer deposition required |
+| SiN GC with SOI grating reflector | SOI reflector | Sim. -2.3 <br> Exp. -1.3 | 80 (1 dB) | Reflector-assisted |
+| SOI GC, duty-cycle apodized | Apodization only | Exp. -3.1 | 41 (1 dB) | Better mode overlap without reflector |
+| SOI SWGC, effective-index apodized | SWG + apodization | Sim. -2.0 <br> Exp. -2.2 | 64 (3 dB) | Effective-index engineering improves overlap and bandwidth |
+| SOI SWGC, dual-etch | Multiple etch depths | Sim. -1.1 <br> Exp. -1.3 | 52 (3 dB) | High CE, but needs more complex etch process |
+| Slanted GC | Slanted / FIB-related structure | Sim. -1.9 <br> Exp. -3.4 | 80 (3 dB) | High directionality, but fabrication is difficult |
+| **This work** | **No reflector; no overlay; no DBR; no dual-etch; focusing + apodized shallow-etched SOI GC** | **Sim. -2.56 <br> (T ~0.555)** | **61.05 <br> (3 dB)** | **Peak locked at 1550 nm; smooth sinc² spectrum; Fabry-Perot oscillation strongly suppressed** |
+
 ## 💡 Discussion and Conclusion
 
 We systematically bridged the gap between idealized 2D designs and realistic 3D physical behaviors in silicon grating couplers. The performance limitations commonly observed in single-etch SOI grating couplers largely come from uncontrolled 3D parasitic interference and lateral mode mismatch. 
